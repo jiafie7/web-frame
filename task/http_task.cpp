@@ -51,26 +51,9 @@ void HttpTask::run()
   req.parseHeader(buf, len);
   req.show();
 
-  std::string html = "  \
-<!DOCTYPE html>         \
-<html>                  \
-  <head>                \
-    <meta charset=\"utf-8\">    \
-    <title>Web-Frame</title>    \
-  </head>               \
-  <body>                \
-    <h1>Web Framework</h1>      \
-    <p>A lightweight C++ web MVC frameword!</p> \
-  </body>               \
-</html>";
+  Server* server = Singleton<Server>::getInstance();
+  std::string resp = server->handle(req);
 
-  std::ostringstream oss;
-  oss << "HTTP/1.1 200 OK\r\n";
-  oss << "Content-Type: text/html; charset: utf-8\r\n";
-  oss << "Content-Length: " << html.size() << "\r\n\r\n";
-  oss << html << "\r\n";
-
-  std::string resp = oss.str();
   socket.send(resp.c_str(), resp.size());
 }
 

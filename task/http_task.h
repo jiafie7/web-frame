@@ -7,6 +7,8 @@ using namespace melon::socket;
 using namespace melon::thread;
 
 #include "web/request.h"
+#include "web/response.h"
+#include "web/server.h"
 using namespace melon::web;
 
 namespace melon
