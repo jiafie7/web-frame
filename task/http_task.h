@@ -6,17 +6,20 @@ using namespace melon::socket;
 #include "thread/task.h"
 using namespace melon::thread;
 
+#include "web/request.h"
+using namespace melon::web;
+
 namespace melon
 {
   namespace task
   {
-    class EchoTask : public Task
+    class HttpTask : public Task
     {
     public:
-      EchoTask() = delete;
-      EchoTask(int socket_fd);
-      ~EchoTask();
-
+      HttpTask() = delete;
+      HttpTask(int socket_fd);
+      ~HttpTask();
+        
       void run();
       void destroy();
 
