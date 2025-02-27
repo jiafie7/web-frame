@@ -1,4 +1,5 @@
 #include "task/http_task.h"
+#include "task/task_factory.h"
 using namespace melon::task;
 
 #include "socket/socket_handler.h"
@@ -62,8 +63,12 @@ void HttpTask::destroy()
 {
   log_debug("http task destroy.");
   if (m_closed)
-    ::close(m_socket_fd);
+  {
+    // Each connection corresponds to a Task. Delete the Task before closing the connection.
+    Singleton<TaskFactory>::getInstance()->remove(m_socket_fd);
+  }
   else
-    Singleton<SocketHandler>::getInstance()->attach(m_socket_fd);
-  delete this;
+  {
+     Singleton<SocketHandler>::getInstance()->attach(m_socket_fd);
+  }
 }

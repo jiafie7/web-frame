@@ -1,7 +1,13 @@
 #pragma once
 
-#include "task/http_task.h"
-using namespace melon::task;
+#include <map>
+#include <mutex>
+
+#include "thread/task.h"
+using namespace melon::thread;
+
+#include "utility/singleton.h"
+using namespace melon::utility;
 
 namespace melon
 {
@@ -9,11 +15,15 @@ namespace melon
   {
     class TaskFactory
     {
+      SINGLETON(TaskFactory);
     public:
-      static Task* create(int socket_fd)
-      {
-        return new HttpTask(socket_fd);
-      }
+      Task* create(int socket_fd);
+      void remove(int socket_fd);
+
+    private:
+      std::mutex m_mutex;
+      // each connection corresponds to a Task.
+      std::map<int, Task*> m_socket_task;
     };
   }
 }
