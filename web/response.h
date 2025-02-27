@@ -1,5 +1,6 @@
 #pragma once
 
+#include <fstream>
 #include <sstream>
 #include <string>
 
@@ -33,6 +34,8 @@ namespace melon
       std::string data() const;
 
       static std::string pageNotFound();
+
+      void render(const std::string& filename);
 
     private:
       int m_code;

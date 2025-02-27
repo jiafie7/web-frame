@@ -1,4 +1,5 @@
 #include "web/response.h"
+#include "web/server.h"
 using namespace melon::web;
 
 Response::Response()
@@ -105,4 +106,22 @@ std::string Response::pageNotFound()
   oss << data << "\r\n";
 
   return oss.str();
+}
+
+void Response::render(const std::string& filename)
+{
+  // get file path "root_path/template/filename"
+  const std::string& template_folder = Singleton<Server>::getInstance()->getTemplateFolder();
+  const std::string& file = template_folder + "/" + filename;
+
+  // read file content
+  std::ifstream ifs(file);
+  if (ifs.fail())
+    return;
+
+  std::ostringstream oss;
+  oss << ifs.rdbuf();
+
+  m_type = HTML;
+  m_data = oss.str();
 }

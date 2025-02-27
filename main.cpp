@@ -6,8 +6,7 @@ using namespace melon::web;
 // handler for default path "/"
 void root(const Request& req, Response& resp)
 {
-  std::string data = "Welcome!";
-  resp.html(data);
+  resp.render("index.html");
 }
 
 // handler for path "/hello"
