@@ -9,6 +9,8 @@
 #include "json/json.h"
 using namespace melon::json;
 
+#include "web/file_upload.h"
+
 namespace melon
 {
   namespace web
@@ -31,8 +33,15 @@ namespace melon
       std::string get(const std::string& name) const;
       Json post(const std::string& name = "") const;
 
+      // get header field value
       std::string header(const std::string& name) const;
+
+      // get cookie
       std::string cookie(const std::string& name) const;
+      
+      // get file object
+      FileUpload file(const std::string& name) const;
+
       std::string path() const;
       std::string userAgent() const;
       std::string userHost() const;
@@ -52,7 +61,9 @@ namespace melon
       Json m_post;  // parameters of post request
 
       std::map<std::string, std::string> m_headers; // http request headers
-      std::map<std::string, std::string> m_cookies; // Cookie
+      std::map<std::string, std::string> m_cookies; // Cookie                                            
+      // store file object for uploaded file
+      std::map<std::string, FileUpload> m_files;   
 
       std::string m_body;   // request body
     };

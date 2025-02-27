@@ -117,10 +117,17 @@ int Request::parseHeader(const char* buf, int len)
 void Request::parseBody(const char* buf, int len)
 {
   const std::string& content_type = header("Content-Type");
-  if (content_type.find("application/json") != std::string::npos)
+
+  if (content_type.find("application/json") != std::string::npos) // if content type is json
   {
     log_debug("body data=%s", buf);
     m_post.load(buf, len); 
+  }
+  else if (content_type.find("multipart/form-data") != std::string::npos) // if content type is form-data
+  {
+    FileUpload upload;
+    upload.parse(buf, len);
+    m_files[upload.name()] = upload;
   }
 }
 
@@ -167,6 +174,14 @@ std::string Request::cookie(const std::string& name) const
   auto it = m_cookies.find(name);
   if (it == m_cookies.end())
     return "";
+  return it->second;
+}
+
+FileUpload Request::file(const std::string& name) const
+{
+  auto it = m_files.find(name);
+  if (it == m_files.end())
+    return FileUpload();
   return it->second;
 }
 

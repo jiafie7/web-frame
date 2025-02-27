@@ -1,6 +1,9 @@
 #include "web/file_upload.h"
 using namespace melon::web;
 
+#include "fs/file.h"
+using namespace melon::fs;
+
 FileUpload::FileUpload()
   : m_buf(nullptr)
   , m_len(0)
