@@ -114,10 +114,14 @@ int Request::parseHeader(const char* buf, int len)
   return i - buf;
 }
  
-int Request::parseBody(const char* buf, int len)
+void Request::parseBody(const char* buf, int len)
 {
-  // to do
-  return 0;
+  const std::string& content_type = header("Content-Type");
+  if (content_type.find("application/json") != std::string::npos)
+  {
+    log_debug("body data=%s", buf);
+    m_post.load(buf, len); 
+  }
 }
 
 bool Request::isGet() const

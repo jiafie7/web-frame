@@ -20,7 +20,7 @@ namespace melon
       ~Request() = default;
 
       int parseHeader(const char* buf, int len);
-      int parseBody(const char* buf, int len);
+      void parseBody(const char* buf, int len);
 
        // return request method type
       bool isGet() const;

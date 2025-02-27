@@ -48,8 +48,9 @@ void HttpTask::run()
   log_debug("recv: conn = %d, msg = %s", m_socket_fd, buf);
 
   Request req;
-  req.parseHeader(buf, len);
-  req.show();
+  int ret = req.parseHeader(buf, len);
+  req.parseBody(buf + ret, len - ret);
+  req.show(); //  log request parse results
 
   Server* server = Singleton<Server>::getInstance();
   std::string resp = server->handle(req);
