@@ -8,6 +8,6 @@ add_compile_options(-g -O2 -Wall -Werror -Wno-unused)
 
 include_directories(./)
 
-file(GLOB_RECURSE SOURCES "utility/*.cpp" "json/*.cpp" "socket/*.cpp" "thread/*.cpp" "task/*.cpp" "frame/*.cpp" "web/*.cpp")
+file(GLOB_RECURSE SOURCES "utility/*.cpp" "json/*.cpp" "socket/*.cpp" "thread/*.cpp" "task/*.cpp" "frame/*.cpp" "web/*.cpp" "reflect/*.cpp" "app/*.cpp")
 
 add_executable(main ${SOURCES} main.cpp)

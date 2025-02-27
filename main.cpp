@@ -21,7 +21,7 @@ int main()
 {
   Server* server = Singleton<Server>::getInstance();
 
-  server->bind("/", root);
+  // server->bind("/", root);
   server->bind("/hello", hello);
 
   server->start();
